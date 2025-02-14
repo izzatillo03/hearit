@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening Practice</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: ; }
+        .task { margin: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .answer { display: none; margin-top: 10px; }
+        .show-button { display: none; margin-top: 10px; padding: 10px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Listening Practice</h1>
+    <div class="task">
+        <h3>Emma’s First Flight</h3>
+        <audio id="audio" controls>
+            <source src="./Emma_s_First_Flight_Emma_was_very_excited.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <p>🎧 Instructions: Listen carefully to the story about Emma’s trip to Paris. While listening, fill in the blanks with the missing words.</p>
+        <p>Emma was very excited. Today was a special day—she was flying to (1) <input type="text" id="answer1"> for the first time!</p>
+        <p>She arrived at the airport (2) <input type="text" id="answer2"> in the morning.</p>
+        <p>The airport was busy, with people walking in different directions. She quickly found the (3) <input type="text" id="answer3"> desk.</p>
+        <p>"Good morning! May I see your (4) <input type="text" id="answer4"> and ticket, please?" the airline staff asked.</p>
+        <p>Emma handed them over. "Do you have any (5) <input type="text" id="answer5"> to check in?"</p>
+        <p>"Yes, just one suitcase," she replied. The staff checked her bag and gave her a (6) <input type="text" id="answer6"> pass.</p>
+        <p>"Your flight is at (7) <input type="text" id="answer7"> 14. Boarding starts at 10:30 AM."</p>
+        <p>Emma walked towards the (8) <input type="text" id="answer8"> check, where she placed her bag on the (9) <input type="text" id="answer9"> belt and walked through the scanner.</p>
+        <p>The security officer checked her bag. "Do you have any (10) <input type="text" id="answer10"> or sharp objects?"</p>
+        <p>"No, I don’t," Emma said. The officer nodded, and she moved to (11) <input type="text" id="answer11"> control, where an officer checked her passport and asked about her trip.</p>
+        <p>Finally, Emma arrived at (12) <input type="text" id="answer12"> 14 and waited for her flight.</p>
+        <p>When the announcement came, she showed her (13) <input type="text" id="answer13"> pass and walked onto the plane.</p>
+        <p>She found her seat, fastened her (14) <input type="text" id="answer14">, and smiled. Her journey was about to begin!</p>
+        <button id="check-answers" class="show-button" onclick="checkAnswers()">Check Answers</button>
+        <div id="result" class="answer"></div>
+    </div>
+
+    <script>
+        const audio = document.getElementById("audio");
+        const checkButton = document.getElementById("check-answers");
+        const resultDiv = document.getElementById("result");
+        
+        // Set time (in seconds) when the button should appear
+        const revealTime = 10;
+        
+        audio.addEventListener("timeupdate", () => {
+            if (audio.currentTime >= revealTime) {
+                checkButton.style.display = "block";
+                audio.removeEventListener("timeupdate", arguments.callee); // Stop checking after showing
+            }
+        });
+        
+        function checkAnswers() {
+            const correctAnswers = ["Paris", "early", "check-in", "passport", "luggage", "boarding", "gate", "security", "conveyor", "liquids", "immigration", "gate", "boarding", "seatbelt"];
+            let correctCount = 0;
+            let output = "";
+
+            for (let i = 0; i < correctAnswers.length; i++) {
+                let userAnswer = document.getElementById(`answer${i + 1}`).value.trim().toLowerCase();
+                if (userAnswer === correctAnswers[i].toLowerCase()) {
+                    output += `<p class='correct'>${i + 1}. Correct!</p>`;
+                    correctCount++;
+                } else {
+                    output += `<p class='incorrect'>${i + 1}. Incorrect! Correct answer: ${correctAnswers[i]}</p>`;
+                }
+            }
+            output += `<p>You got ${correctCount} out of ${correctAnswers.length} correct.</p>`;
+            resultDiv.innerHTML = output;
+            resultDiv.style.display = "block";
+        }
+    </script>
+</body>
+</html>
