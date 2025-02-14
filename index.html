@@ -3,68 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listening Practice</title>
+    <link rel="icon" type="image/png" href="./favicon-32x32.png">
+    <title>HearIT - Emma's First Flight</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 p-5">
-    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h1 class="text-2xl font-bold text-center mb-4">Listening Gap-Filling Exercise: Emma’s First Flight</h1>
-        <p class="text-gray-700 mb-4">🎧 <strong>Instructions:</strong> Listen carefully to the story about Emma’s trip to Paris. While listening, fill in the blanks with the missing words.</p>
-        <audio id="audio" controls class="w-full mb-4">
-            <source src="./Emma_s_First_Flight_Emma_was_very_excited.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <div class="space-y-4">
-            <p>Emma was very excited. Today was a special day—she was flying to (1) <input type="text" id="answer1" class="border p-1 rounded"> for the first time!</p>
-            <p>She arrived at the airport (2) <input type="text" id="answer2" class="border p-1 rounded"> in the morning.</p>
-            <p>The airport was busy, with people walking in different directions. She quickly found the (3) <input type="text" id="answer3" class="border p-1 rounded"> desk.</p>
-            <p>"Good morning! May I see your (4) <input type="text" id="answer4" class="border p-1 rounded"> and ticket, please?" the airline staff asked.</p>
-            <p>Emma handed them over. "Do you have any (5) <input type="text" id="answer5" class="border p-1 rounded"> to check in?"</p>
-            <p>"Yes, just one suitcase," she replied. The staff checked her bag and gave her a (6) <input type="text" id="answer6" class="border p-1 rounded"> pass.</p>
-            <p>"Your flight is at (7) <input type="text" id="answer7" class="border p-1 rounded"> 14. Boarding starts at 10:30 AM."</p>
-            <p>Emma walked towards the (8) <input type="text" id="answer8" class="border p-1 rounded"> check, where she placed her bag on the (9) <input type="text" id="answer9" class="border p-1 rounded"> belt and walked through the scanner.</p>
-            <p>The security officer checked her bag. "Do you have any (10) <input type="text" id="answer10" class="border p-1 rounded"> or sharp objects?"</p>
-            <p>"No, I don’t," Emma said. The officer nodded, and she moved to (11) <input type="text" id="answer11" class="border p-1 rounded"> control, where an officer checked her passport and asked about her trip.</p>
-            <p>Finally, Emma arrived at (12) <input type="text" id="answer12" class="border p-1 rounded"> 14 and waited for her flight.</p>
-            <p>When the announcement came, she showed her (13) <input type="text" id="answer13" class="border p-1 rounded"> pass and walked onto the plane.</p>
-            <p>She found her seat, fastened her (14) <input type="text" id="answer14" class="border p-1 rounded">, and smiled. Her journey was about to begin!</p>
-        </div>
-        <button id="check-answers" class="hidden mt-4 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-700">Check Answers</button>
-        <div id="result" class="hidden mt-4 p-4 bg-gray-200 rounded"></div>
-    </div>
-    <script>
-        const audio = document.getElementById("audio");
-        const checkButton = document.getElementById("check-answers");
-        const resultDiv = document.getElementById("result");
-        
-        const revealTime = 10;
-        
-        audio.addEventListener("timeupdate", () => {
-            if (audio.currentTime >= revealTime) {
-                checkButton.classList.remove("hidden");
-                audio.removeEventListener("timeupdate", arguments.callee);
-            }
-        });
-        
-        function checkAnswers() {
-            const correctAnswers = ["Paris", "early", "check-in", "passport", "baggage", "boarding", "Gate", "security", "conveyor", "liquids", "passport", "Gate", "boarding", "seatbelt"];
-            let correctCount = 0;
-            let output = "";
-
-            for (let i = 0; i < correctAnswers.length; i++) {
-                let userAnswer = document.getElementById(`answer${i + 1}`).value.trim().toLowerCase();
-                if (userAnswer === correctAnswers[i].toLowerCase()) {
-                    output += `<p class='text-green-600'>${i + 1}. Correct!</p>`;
-                    correctCount++;
-                } else {
-                    output += `<p class='text-red-600'>${i + 1}. Incorrect! Correct answer: ${correctAnswers[i]}</p>`;
-                }
-            }
-            output += `<p class='font-bold mt-2'>You got ${correctCount} out of ${correctAnswers.length} correct.</p>`;
-            resultDiv.innerHTML = output;
-            resultDiv.classList.remove("hidden");
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
         }
-        checkButton.addEventListener("click", checkAnswers);
+        .floating-plane { animation: float 4s ease-in-out infinite; }
+        .answer-input:focus { box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
+
+        input {
+            border-bottom: 1px solid;
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-green-100 to-blue-100 p-5">
+    <div class="max-w-4xl mx-auto transform transition-all duration-300">
+        <!-- Header Section -->
+        <div class="bg-gradient-to-r from-emerald-600 to-sky-600 rounded-t-2xl p-6 shadow-xl">
+            <div class="flex items-center justify-between">
+                <h1 class="text-3xl font-bold text-white font-mono">HearIt ✈️</h1>
+                <div class="floating-plane text-4xl">🛫</div>
+            </div>
+            <p class="text-emerald-100 mt-3 text-lg">Listening Comprehension Challenge <br>by <span class="font-semibold" style="font-size: 20px; font-style: italic;">Alijonova Zulayho</span></p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="bg-white/90 backdrop-blur-sm rounded-b-2xl shadow-lg p-8 space-y-8">
+            <!-- Exercise Header -->
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-sky-800 mb-2">Emma's First Flight Adventure</h2>
+                <p class="text-emerald-600 font-medium">✈️ Fill the blanks while listening to the story</p>
+            </div>
+
+            <!-- Audio Player -->
+            <div class="group relative bg-sky-50 rounded-xl p-4 transition-all hover:bg-sky-100">
+                <audio id="audio" controls class="w-full">
+                    <source src="./Emma_s_First_Flight_Emma_was_very_excited.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <!-- Interactive Instructions -->
+            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-lg flex items-start space-x-3">
+                <div class="text-emerald-600 text-xl">🎧</div>
+                <div>
+                    <p class="font-semibold text-emerald-800">Listening Tips!</p>
+                    <p class="text-emerald-700">Pay attention to airport procedures vocabulary. You'll hear each section twice!</p>
+                </div>
+            </div>
+
+            <!-- Exercise Content Grid -->
+            <div class="grid gap-6 md:grid-cols-2">
+                <!-- Left Column Questions 1-7 -->
+                <div class="space-y-6">
+                    <div class="question-card bg-sky-50/50">
+                        <p class="text-gray-700 leading-relaxed">Emma was very excited. Today was a special day—she was flying to (1) 
+                            <input type="text" class="answer-input" data-number="1">
+                        for the first time!</p>
+                    </div>
+
+                    <div class="question-card">
+                        <p class="text-gray-700 leading-relaxed">She arrived at the airport (2) 
+                            <input type="text" class="answer-input" data-number="2">
+                        in the morning.</p>
+                    </div>
+
+                    <div class="question-card bg-sky-50/50">
+                        <p class="text-gray-700 leading-relaxed">The airport was busy, with people walking in different directions. She quickly found the (3) 
+                            <input type="text" class="answer-input" data-number="3">
+                        desk.</p>
+                    </div>
+
+                    <div class="question-card">
+                        <p class="text-gray-700 leading-relaxed">"Good morning! May I see your (4) 
+                            <input type="text" class="answer-input" data-number="4">
+                        and ticket, please?" the airline staff asked.</p>
+                    </div>
+
+                    <div class="question-card bg-sky-50/50">
+                        <p class="text-gray-700 leading-relaxed">Emma handed them over. "Do you have any (5) 
+                            <input type="text" class="answer-input" data-number="5">
+                        to check in?"</p>
+                    </div>
+
+                    <div class="question-card">
+                        <p class="text-gray-700 leading-relaxed">"Yes, just one suitcase," she replied. The staff checked her bag and gave her a (6) 
+                            <input type="text" class="answer-input" data-number="6">
+                        pass.</p>
+                    </div>
+
+                    <div class="question-card bg-sky-50/50">
+                        <p class="text-gray-700 leading-relaxed">"Your flight is at (7) 
+                            <input type="text" class="answer-input" data-number="7">
+                        14. Boarding starts at 10:30 AM."</p>
+                    </div>
+                </div>
+
+                <!-- Right Column Questions 8-14 -->
+                <div class="space-y-6">
+                    <div class="question-card">
+                        <p class="text-gray-700 leading-relaxed">Emma walked towards the (8) 
+                            <input type="text" class="answer-input" data-number="8">
+                        check, where she placed her bag on the (9) 
+                            <input type="text" class="answer-input" data-number="9">
+                        belt and walked through the scanner.</p>
+                    </div>
+
+                    <div class="question-card bg-sky-50/50">
+                        <p class="text-gray-700 leading-relaxed">The security officer checked her bag. "Do you have any (10) 
+                            <input type="text" class="answer-input" data-number="10">
+                        or sharp objects?"</p>
+                    </div>
+
+                    <div class="question-card">
+                        <p class="text-gray-700 leading-relaxed">"No, I don’t," Emma said. The officer nodded, and she moved to (11) 
+                            <input type="text" class="answer-input" data-number="11">
+                        control, where an officer checked her passport and asked about her trip.</p>
+                    </div>
+
+                    <div class="question-card bg-sky-50/50">
+                        <p class="text-gray-700 leading-relaxed">Finally, Emma arrived at (12) 
+                            <input type="text" class="answer-input" data-number="12">
+                        14 and waited for her flight.</p>
+                    </div>
+
+                    <div class="question-card">
+                        <p class="text-gray-700 leading-relaxed">When the announcement came, she showed her (13) 
+                            <input type="text" class="answer-input" data-number="13">
+                        pass and walked onto the plane.</p>
+                    </div>
+
+                    <div class="question-card bg-sky-50/50">
+                        <p class="text-gray-700 leading-relaxed">She found her seat, fastened her (14) 
+                            <input type="text" class="answer-input" data-number="14">
+                        , and smiled. Her journey was about to begin!</p>
+                    </div>
+
+                    <!-- Progress Section -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-sky-100 sticky top-4">
+                        <h3 class="text-sky-800 font-semibold mb-2">Flight Progress 🛫</h3>
+                        <div class="h-2 bg-sky-100 rounded-full mb-2">
+                            <div id="progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                        <p class="text-sm text-sky-600">Completed: <span id="progress-count">0</span>/14 questions</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="mt-8 space-y-4">
+                <button id="check-answers" class="w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-emerald-200/50 transition-all">
+                    Check Answers ✈️
+                </button>
+                
+                <div id="result" class="hidden p-6 rounded-xl bg-emerald-50 border border-emerald-200 space-y-3 animate-slideIn"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = ["Paris", "early", "check-in", "passport", "baggage", "boarding", "Gate", "security", "conveyor", "liquids", "passport", "Gate", "boarding", "seatbelt"];
+        const answerInputs = document.querySelectorAll('.answer-input');
+        const resultDiv = document.getElementById('result');
+        const progressBar = document.getElementById('progress-bar');
+        const progressCount = document.getElementById('progress-count');
+
+        // Real-time progress tracking
+        answerInputs.forEach(input => {
+            input.addEventListener('input', updateProgress);
+        });
+
+        function updateProgress() {
+            const filled = [...answerInputs].filter(input => input.value.trim() !== '').length;
+            const progress = (filled / correctAnswers.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressCount.textContent = filled;
+        }
+
+        // Answer checking with animations
+        function checkAnswers() {
+            let correctCount = 0;
+            let resultHTML = '<h4 class="text-xl font-bold text-sky-800 mb-3">Flight Report 📋</h4>';
+
+            answerInputs.forEach((input, index) => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correct = correctAnswers[index].toLowerCase();
+                
+                input.classList.remove('border-red-300', 'bg-red-50', 'border-green-300', 'bg-green-50');
+                
+                if(userAnswer === correct) {
+                    correctCount++;
+                    input.classList.add('border-green-300', 'bg-green-50');
+                    resultHTML += `<p class="text-emerald-700 flex items-center"><span class="mr-2">✅</span> Question ${index+1}: Correct!</p>`;
+                } else {
+                    input.classList.add('border-red-300', 'bg-red-50');
+                    resultHTML += `
+                        <p class="text-red-600 flex items-center">
+                            <span class="mr-2">❌</span> 
+                            Question ${index+1}: 
+                            <span class="ml-2 text-emerald-700">Correct answer: <span class="font-semibold">${correctAnswers[index]}</span></span>
+                        </p>`;
+                }
+            });
+
+            resultHTML += `
+                <div class="mt-4 p-3 rounded-lg bg-white">
+                    <p class="font-bold text-lg text-center">
+                        ✈️ Score: ${correctCount}/${correctAnswers.length} 
+                        <span class="text-sm text-gray-500">(${Math.round((correctCount/correctAnswers.length)*100)}%)</span>
+                    </p>
+                    <p class="text-center mt-2 text-sm text-gray-600">
+                        ${correctCount === correctAnswers.length ? 'Perfect score! Ready for takeoff! 🎉' : 'Keep practicing!'}
+                    </p>
+                </div>`;
+
+            resultDiv.innerHTML = resultHTML;
+            resultDiv.classList.remove('hidden');
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('check-answers').addEventListener('click', checkAnswers);
     </script>
 </body>
 </html>
